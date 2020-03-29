@@ -9,11 +9,12 @@ The relevant modules include:
 1. BLE contact event exchange: using the open source [covid-watch](https://github.com/covid19risk] platform
 1. (potentially) BLE contact event exchange: using the SG app code if/when it is open sourced
 1. public exposure database: using the complementary [public COVID19 database](https://github.com/covid19database/covid19db-api)
-1. (potentially) pairwise risk estimation: using the [private kit](https://github.com/tripleblindmarket/private-kit/pull/163) project
+1. (potentially) pairwise risk estimation on the phone: using the [private kit](https://github.com/tripleblindmarket/private-kit) project
+1. (potentially) pairwise risk estimation on the server: using the [SafeTrace](https://github.com/enigmampc/SafeTrace) project
 
-### Difference from other projects
+### Our focus: collaboration, not competition
 
-We are not building an app. We are building shared infrastructure that other apps can use. Our app is essentially a showcase and a test vehicle to ensure that the shared infrastructure works. We are not sure if we will even release it in the stores. 
+We are not building an app. We are building shared infrastructure that other apps can use. Our app is essentially a showcase and a test vehicle to ensure that the shared infrastructure works. We are not sure if we will even release it in the stores. Other projects are doing a great job of building delightful apps that provide high customer value. We don't want to compete with them. We want to focus on enabling collaborations between the various projects, so that we can tackle this global crisis together.
 
 ### Implmentation strategy
 
