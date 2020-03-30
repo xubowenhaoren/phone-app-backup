@@ -9,13 +9,11 @@
 
 angular.module('emission', ['ionic',
     'emission.controllers','emission.services', 'emission.plugin.logger',
-    'emission.splash.customURLScheme', 'emission.splash.referral',
     'emission.services.email',
   'emission.intro', 'emission.main',
   'pascalprecht.translate'])
 
-.run(function($ionicPlatform, $rootScope, $http, Logger,
-    CustomURLScheme, ReferralHandler) {
+.run(function($ionicPlatform, $rootScope, $http, Logger) {
   console.log("Starting run");
   // alert("Starting run");
   $ionicPlatform.ready(function() {
