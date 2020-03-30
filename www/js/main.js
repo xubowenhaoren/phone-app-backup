@@ -3,7 +3,6 @@
 angular.module('emission.main', ['emission.main.recent',
                                  'emission.main.diary',
                                  'emission.main.control',
-                                 'emission.main.goals',
                                  'emission.main.common',
                                  'emission.main.heatmap',
                                  'emission.main.metrics',
@@ -58,16 +57,6 @@ angular.module('emission.main', ['emission.main.recent',
       'main-control': {
         templateUrl: 'templates/control/main-control.html',
         controller: 'ControlCtrl'
-      }
-    }
-  })
-
-  .state('root.main.goals', {
-    url: '/goals',
-    views: {
-      'main-goals': {
-        templateUrl: 'templates/main-goals.html',
-        controller: 'GoalsCtrl'
       }
     }
   })

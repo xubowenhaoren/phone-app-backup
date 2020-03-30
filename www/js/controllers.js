@@ -1,10 +1,7 @@
 'use strict';
 
-angular.module('emission.controllers', ['emission.splash.updatecheck',
-                                        'emission.splash.startprefs',
-                                        'emission.splash.pushnotify',
+angular.module('emission.controllers', ['emission.splash.startprefs',
                                         'emission.splash.localnotify',
-                                        'emission.survey.launch',
                                         'emission.stats.clientstats',
                                         'emission.tripconfirm.posttrip.prompt'])
 
@@ -13,8 +10,8 @@ angular.module('emission.controllers', ['emission.splash.updatecheck',
 .controller('DashCtrl', function($scope) {})
 
 .controller('SplashCtrl', function($scope, $state, $interval, $rootScope, 
-    UpdateCheck, StartPrefs, PushNotify,
-    LocalNotify, ClientStats, PostTripAutoPrompt, SurveyLaunch)  {
+    StartPrefs,
+    LocalNotify, ClientStats, PostTripAutoPrompt)  {
   console.log('SplashCtrl invoked');
   // alert("attach debugger!");
   // PushNotify.startupInit();
@@ -22,13 +19,6 @@ angular.module('emission.controllers', ['emission.splash.updatecheck',
   $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
     console.log("Finished changing state from "+JSON.stringify(fromState)
         + " to "+JSON.stringify(toState));
-    /*
-    if ($rootScope.checkedForUpdates) {
-      window.Logger.log(window.Logger.log("Already checked for update, skipping"));
-    } else {
-      UpdateCheck.checkForUpdates();
-      $rootScope.checkedForUpdates = true;
-    } */
     ClientStats.addReading(ClientStats.getStatKeys().STATE_CHANGED,
       fromState.name + '-2-' + toState.name).then(function() {}, function() {});
   });
@@ -56,7 +46,6 @@ angular.module('emission.controllers', ['emission.splash.updatecheck',
       var personalTabs = ['root.main.common.map',
                           'root.main.control',
                           'root.main.metrics',
-                          'root.main.goals',
                           'root.main.diary']
       if (isInList(toState.name, personalTabs)) {
         // toState is in the personalTabs list

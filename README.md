@@ -21,12 +21,6 @@ Install gradle (https://gradle.org/install/) for android builds.
 
 Then, get the current version of our code
 
-Enable platform hooks, including http on iOS9
-
-```
-$ git clone https://github.com/driftyco/ionic-package-hooks.git ./package-hooks
-```
-
 Setup the config
 
 ```
