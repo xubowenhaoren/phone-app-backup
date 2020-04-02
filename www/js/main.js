@@ -2,6 +2,7 @@
 
 angular.module('emission.main', ['emission.main.recent',
                                  'emission.main.diary',
+                                 'emission.main.bluetooth',
                                  'emission.main.control',
                                  'emission.main.common',
                                  'emission.main.heatmap',
