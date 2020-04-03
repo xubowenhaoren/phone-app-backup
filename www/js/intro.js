@@ -87,11 +87,20 @@ angular.module('emission.intro', ['emission.splash.startprefs',
     $state.go('root.main.heatmap');
   };
 
+  var closeAndFinish = function(callbackWindow) {
+    callbackWindow.close();
+    $scope.finish();
+  }
+
   $scope.agree = function() {
     StartPrefs.markConsented().then(function(response) {
       $ionicHistory.clearHistory();
       if ($state.is('root.intro')) {
-        $scope.finish();
+        window.cordova.plugins.BEMJWTAuth.setPromptedAuthToken("N/A").then(function() {
+          $scope.finish();
+        }).catch(function(err) {
+          logger.displayError("Error setting programmatic token", err);
+        });
       } else {
         StartPrefs.loadPreferredScreen();
       }
