@@ -1,6 +1,9 @@
 covid19 phone app
 --------------------
 
+![osx-build-ios](https://github.com/covid19database/phone-app/workflows/osx-build-ios/badge.svg)
+![osx-ubuntu-build-android](https://github.com/covid19database/phone-app/workflows/osx-ubuntu-build-android/badge.svg)
+
 This is the reference app for the [covid19 shared datastore](https://github.com/covid19database/covid19db-api/).
 
 Pre-requisites
