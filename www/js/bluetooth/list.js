@@ -2,36 +2,35 @@
 
 angular
   .module( 'emission.main.bluetooth.list', [ ] )
-  .controller( 'BluetoothListCtrl', function( $window, $scope, $rootScope, $ionicPlatform, $ionicScrollDelegate, 
-                                              $ionicPopup, ionicDatePicker, Timeline, CommonGraph, DiaryHelper, 
-                                              PostTripManualMarker, ConfirmHelper,  Logger, $translate ) {
+  .controller( 'BluetoothListCtrl', function( $scope, $ionicPlatform, $ionicScrollDelegate ) {
 
     console.log( 'Controller BluetoothListCtrl called' )
 
-    angular.extend( $scope, { 
-      defaults: { 
-        zoomControl: false, dragging: false, zoomAnimation: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false 
-      } 
-    } )
+    angular.extend( $scope, { defaults: { zoomControl: false, dragging: false, zoomAnimation: true, touchZoom: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false } } )
 
-    $scope.refresh = _ => {
-      if ($ionicScrollDelegate.getScrollPosition().top < 20) {
-        $scope.$broadcast('invalidateSize')
+    var getContactEvents = _ => {
+      $scope.data = []
+      if ( contacttracing ) {
+        contacttracing.startScanner( null, 10, ce => logContactEvent( ce, false ), e => console.error( 'SCAN', e ) )
+        contacttracing.startAdvertiser( null, ce => logContactEvent( ce, true ), e => console.error( 'AD', e ) )
+        $scope.update = setInterval( contacttracing.updateCEN, 60000 )
+        $scope.refresh = _ => {
+          if ($ionicScrollDelegate.getScrollPosition().top < 20) {
+            clearInterval( $scope.update )
+            contacttracing.stopScanner( scanStopped = e => {
+              e && console.error( e )
+              contacttracing.stopAdvertiser( adStopped = e => {
+                e && console.error( e )
+                getContactEvents()
+              }, adStopped )
+            }, adStopped )
+          }
+        }
       }
     }
 
-    $scope.$on( '$ionicView.loaded', _ => { } )
+    var logContactEvent = ( ce, ad ) => $scope.data.push( { time: new Date().toLocaleTimeString(), number: ce.cen.toUpperCase(), ad } )
 
-    $ionicPlatform.ready().then( _ => {
-
-      // load data here
-      // contacttracing.startAdvertiser()
-      // contacttracing.startScanner()
-
-      $scope.data = [ { time: new Date().toLocaleTimeString(), number: '01234567-89AB-CDEF-01234-567890ABCDEF', ad:false }, { time: new Date().toLocaleTimeString(), number: '01234567-89AB-CDEF-01234-567890ABCDEF', ad:true } ]
-
-      $scope.$on( '$ionicView.afterEnter', _ => {  } )
-
-    } )
+    $ionicPlatform.ready().then( getContactEvents )
 
 })
