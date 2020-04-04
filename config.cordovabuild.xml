@@ -134,7 +134,7 @@
     </plugin>
     <plugin name="edu.berkeley.eecs.emission.cordova.serversync" spec="https://github.com/e-mission/cordova-server-sync.git#v1.2" />
     <plugin name="edu.berkeley.eecs.emission.cordova.settings" spec="https://github.com/e-mission/cordova-connection-settings.git#v1.2.0" />
-    <plugin name="edu.berkeley.eecs.emission.cordova.transitionnotify" spec="https://github.com/e-mission/e-mission-transition-notify.git#v1.2.2" />
+    <plugin name="edu.berkeley.eecs.emission.cordova.transitionnotify" spec="https://github.com/e-mission/e-mission-transition-notify.git#v1.2.3" />
     <plugin name="edu.berkeley.eecs.emission.cordova.unifiedlogger" spec="https://github.com/e-mission/cordova-unified-logger.git#v1.3.1" />
     <plugin name="edu.berkeley.eecs.emission.cordova.usercache" spec="https://github.com/e-mission/cordova-usercache.git#v1.1.1" />
     <engine name="ios" spec="^5.1.1" />

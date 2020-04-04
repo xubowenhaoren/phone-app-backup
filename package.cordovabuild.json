@@ -50,7 +50,7 @@
     "em-cordova-jwt-auth": "git+https://github.com/e-mission/cordova-jwt-auth.git#v1.6.0",
     "em-cordova-server-communication": "git+https://github.com/e-mission/cordova-server-communication.git#v1.2.1",
     "em-cordova-server-sync": "git+https://github.com/e-mission/cordova-server-sync.git#v1.2",
-    "em-cordova-transition-notify": "git+https://github.com/e-mission/e-mission-transition-notify.git#v1.2.2",
+    "em-cordova-transition-notify": "git+https://github.com/e-mission/e-mission-transition-notify.git#v1.2.3",
     "em-cordova-unified-logger": "git+https://github.com/e-mission/cordova-unified-logger.git#v1.3.1",
     "em-cordova-usercache": "git+https://github.com/e-mission/cordova-usercache.git#v1.1.1",
     "fs-extra": "^5.0.0",
