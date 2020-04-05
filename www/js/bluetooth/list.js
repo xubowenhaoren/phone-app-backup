@@ -15,24 +15,24 @@ angular
     var startScanningContactEvents = _ => {
         $scope.data = [];
         var startScanPromise =
-            $window.contacttracing.startScanner( null, 10)
+            $window.cordova.plugins.contacttracing.startScanner( null, 10)
             .then(ce => logContactEvent( ce, false ))
             .catch(e => console.error( 'SCAN', e ));
         var startAdvPromise =
-          $window.contacttracing.startAdvertiser( null )
+          $window.cordova.plugins.contacttracing.startAdvertiser( null )
             .then( ce => logContactEvent( ce, true ))
             .catch( e => console.error( 'AD', e ));
 
         return Promise.all([startScanPromise, startAdvPromise]) .then(_ => {
           Logger.log("successfully started scanning, launching CEN update");
-          $scope.update = $window.setInterval( $window.contacttracing.updateCEN,
+          $scope.update = $window.setInterval( $window.cordova.plugins.contacttracing.updateCEN,
             60000 );
         });
     }
 
     var stopScanningContactEvents = _ => {
-        var stopScanPromise = $window.contacttracing.stopScanner();
-        var stopAdvPromise = $window.contacttracing.stopAdvertiser();
+        var stopScanPromise = $window.cordova.plugins.contacttracing.stopScanner();
+        var stopAdvPromise = $window.cordova.plugins.contacttracing.stopAdvertiser();
         return Promise.all([stopScanPromise, stopAdvPromise]).then(_ => {
             Logger.log("successfully stopped scanning");
             console.log("About to clear interval" + $scope.update);

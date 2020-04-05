@@ -11,7 +11,7 @@
   <issue>https://github.com/tzachari/cordova-plugin-contacttracing/issues</issue>
 
   <js-module src="www/contacttracing.js" name="contacttracing">
-    <clobbers target="contacttracing" />
+    <clobbers target="cordova.plugins.contacttracing" />
   </js-module>
 
   <platform name="android" kotlin="1.3.0">
