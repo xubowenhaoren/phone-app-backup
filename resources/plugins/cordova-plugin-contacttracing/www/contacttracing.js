@@ -1,23 +1,33 @@
 module.exports = {
 
-  startScanner : ( uuid, delay, success, error ) => { 
-    cordova.exec( success, error, 'ContactTracing', 'startScanner', [ uuid, delay ] ) 
+  startScanner : ( uuid, delay ) => { 
+    return new Promise(function(resolve, reject) {
+        cordova.exec( resolve, reject, 'ContactTracing', 'startScanner', [ uuid, delay ] ) 
+    });
   },
 
-  stopScanner : ( success, error ) => { 
-    cordova.exec( success, error, 'ContactTracing', 'stopScanner', [ ] ) 
+  stopScanner : ( ) => { 
+    return new Promise(function(resolve, reject) {
+        cordova.exec( resolve, reject, 'ContactTracing', 'stopScanner', [ ] ) 
+    });
   },
 
-  startAdvertiser : ( uuid, success, error ) => { 
-    cordova.exec( success, error, 'ContactTracing', 'startAdvertiser', [ uuid ] ) 
+  startAdvertiser : ( uuid ) => { 
+    return new Promise(function(resolve, reject) {
+        cordova.exec( resolve, reject, 'ContactTracing', 'startAdvertiser', [ uuid ] ) 
+    });
   },
 
-  stopAdvertiser : ( success, error ) => { 
-    cordova.exec( success, error, 'ContactTracing', 'stopAdvertiser', [ ] ) 
+  stopAdvertiser : ( ) => { 
+    return new Promise(function(resolve, reject) {
+        cordova.exec( resolve, reject, 'ContactTracing', 'stopAdvertiser', [ ] ) 
+    });
   },
 
-  updateCEN : ( success, error ) => { 
-    cordova.exec( success, error, 'ContactTracing', 'updateCEN', [ ] ) 
+  updateCEN : ( ) => { 
+    return new Promise(function(resolve, reject) {
+        cordova.exec( resolve, reject, 'ContactTracing', 'updateCEN', [ ] ) 
+    });
   }
 
 }
