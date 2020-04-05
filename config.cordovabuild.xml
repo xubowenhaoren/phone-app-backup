@@ -127,6 +127,7 @@
     <plugin name="cordova-plugin-whitelist" spec="~1.3.3" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <plugin name="cordova-plugin-contacttracing" spec="resources/plugins/cordova-plugin-contacttracing" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <plugin name="edu.berkeley.eecs.emission.cordova.auth" spec="https://github.com/e-mission/cordova-jwt-auth.git#v1.6.0" />
     <plugin name="edu.berkeley.eecs.emission.cordova.comm" spec="https://github.com/e-mission/cordova-server-communication.git#v1.2.1" />
