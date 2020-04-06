@@ -12,45 +12,59 @@ angular
             zoomAnimation: true, touchZoom: false, scrollWheelZoom: false,
             doubleClickZoom: false, boxZoom: false } } );
 
-    var startScanningContactEvents = _ => {
-        $scope.data = [];
-        var startScanPromise =
-            $window.cordova.plugins.contacttracing.startScanner( null, 10)
-            .then(ce => logContactEvent( ce, false ))
-            .catch(e => console.error( 'SCAN', e ));
-        var startAdvPromise =
-          $window.cordova.plugins.contacttracing.startAdvertiser( null )
-            .then( ce => logContactEvent( ce, true ))
-            .catch( e => console.error( 'AD', e ));
-
-        return Promise.all([startScanPromise, startAdvPromise]) .then(_ => {
-          Logger.log("successfully started scanning, launching CEN update");
-          $scope.update = $window.setInterval( $window.cordova.plugins.contacttracing.updateCEN,
-            60000 );
-        });
+    $scope.startAdvertiser = _ => {
+        $window.cordova.plugins.contacttracing.startAdvertiser( null )
+            .catch(err => Logger.displayError("Error while starting advertise", err));
     }
 
-    var stopScanningContactEvents = _ => {
-        var stopScanPromise = $window.cordova.plugins.contacttracing.stopScanner();
-        var stopAdvPromise = $window.cordova.plugins.contacttracing.stopAdvertiser();
-        return Promise.all([stopScanPromise, stopAdvPromise]).then(_ => {
-            Logger.log("successfully stopped scanning");
-            console.log("About to clear interval" + $scope.update);
-        }).catch(err => {
-            Logger.displayError("stopping scan errored", err);
-            console.log("About to clear interval" + $scope.update);
-        });
+    $scope.stopAdvertiser = _ => {
+        $window.cordova.plugins.contacttracing.stopAdvertiser()
+            .catch(err => Logger.displayError("Error while stopping advertise", err));
     }
+
+    $scope.startScan = _ => {
+        $window.cordova.plugins.contacttracing.startScanner( null, 10 )
+            .catch(err => Logger.displayError("Error while starting scan", err));
+    }
+
+    $scope.stopScan = _ => {
+        $window.cordova.plugins.contacttracing.stopScanner()
+            .catch(err => Logger.displayError("Error while stopping scan", err));
+    }
+
+    $scope.pullRefresh = _ => {
+      if ($ionicScrollDelegate.getScrollPosition().top < 20) {
+        $scope.refresh();
+        return true;
+      }
+    }
+
+    $scope.formatTime = (ts_in_secs) => moment(ts_in_secs * 1000).format('LT')
 
     $scope.refresh = _ => {
-      if ($ionicScrollDelegate.getScrollPosition().top < 20) {
-        stopScanningContactEvents().then(startScanningContactEvents());
-      }
+        console.log("About to refresh CEN list");
+        $window.cordova.plugins.contacttracing.updateCEN().then(cenList => {
+            Logger.log("Retrieved list of size "+cenList.length);
+            $scope.$apply(_ => {
+                $scope.data = cenList.map(cen => {
+                    if(cen.type == "advertise") {
+                        cen.ad = true;
+                    } else {
+                        cen.ad = false;
+                    }
+                    return cen;
+                });;
+            });
+        }).catch(err => Logger.displayError("Error refreshing", err));
     }
 
     var logContactEvent = ( ce, ad ) => $scope.data.push(
         { time: new Date().toLocaleTimeString(), number: ce.cen.toUpperCase(), ad }
     );
 
-    // $ionicPlatform.ready().then( startScanningContactEvents() );
+    $ionicPlatform.ready().then( $scope.update = $window.setInterval(
+        $scope.refresh(), 60000 ) );
+
+    $ionicPlatform.ready().then( $scope.testPeriodic = $window.setInterval(
+        console.log("Periodic call"), 60000 ) );
 });

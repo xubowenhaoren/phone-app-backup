@@ -179,61 +179,13 @@ angular.module('emission.services', ['emission.plugin.logger',
     }
 })
 .service('UnifiedDataLoader', function($window, CommHelper, Logger) {
-    var combineWithDedup = function(list1, list2) {
-      var combinedList = list1.concat(list2);
-      return combinedList.filter(function(value, i, array) {
-        var firstIndexOfValue = array.findIndex(function(element, index, array) {
-          return element.metadata.write_ts == value.metadata.write_ts;
-        });
-        return firstIndexOfValue == i;
-      });
-    };
-
     // TODO: generalize to iterable of promises
     var combinedPromise = function(localPromise, remotePromise, combiner) {
-        return new Promise(function(resolve, reject) {
-          var localResult = [];
-          var localError = null;
+        return localPromise;
+    }
 
-          var remoteResult = [];
-          var remoteError = null;
-
-          var localPromiseDone = false;
-          var remotePromiseDone = false;
-
-          var checkAndResolve = function() {
-            if (localPromiseDone && remotePromiseDone) {
-              // time to return from this promise
-              if (localError && remoteError) {
-                reject([localError, remoteError]);
-              } else {
-                Logger.log("About to dedup localResult = "+localResult.length
-                    +"remoteResult = "+remoteResult.length);
-                var dedupedList = combiner(localResult, remoteResult);
-                Logger.log("Deduped list = "+dedupedList.length);
-                resolve(dedupedList);
-              }
-            }
-          };
-
-          localPromise.then(function(currentLocalResult) {
-            localResult = currentLocalResult;
-            localPromiseDone = true;
-          }, function(error) {
-            localResult = [];
-            localError = error;
-            localPromiseDone = true;
-          }).then(checkAndResolve);
-
-          remotePromise.then(function(currentRemoteResult) {
-            remoteResult = currentRemoteResult;
-            remotePromiseDone = true;
-          }, function(error) {
-            remoteResult = [];
-            remoteError = error;
-            remotePromiseDone = true;
-          }).then(checkAndResolve);
-        })
+    var combineWithDedup = function(list1, list2) {
+        return list1;
     }
 
     // TODO: Generalize this to work for both sensor data and messages

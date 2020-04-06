@@ -10,10 +10,9 @@ import org.json.*
 
 class ContactTracing : CordovaPlugin() {
 
-    private var scanContext: CallbackContext? = null
-    private var adContext: CallbackContext? = null
     private var cenScanner: CENScanner? = null
     private var cenAdvertiser: CENAdvertiser? = null
+    private var inMemoryCache: MutableList<JSONObject>? = mutableListOf();
 
     @Throws(JSONException::class)
     override fun execute(action: String, args: JSONArray, context: CallbackContext): Boolean {
@@ -43,39 +42,27 @@ class ContactTracing : CordovaPlugin() {
         try {
             when ( action ) {
                 "startScanner" -> {
-                    scanContext?.let{ throw Exception( "Scanner is already started" ) }
-                    scanContext = context
                     try { uuid = UUID.fromString( args.getString(0) ) } catch (e: Exception) { }
                     cenScanner!!.startScanning( arrayOf( uuid ), args.getLong(1) ?: 10 )
-                    result.setKeepCallback( true )
-                    context.sendPluginResult( result )
+                    context.success();
                 }
                 "stopScanner" -> {
-                    scanContext ?: throw Exception( "Scanner is already stopped" )
+                    try { uuid = UUID.fromString( args.getString(0) ) } catch (e: Exception) { }
                     cenScanner!!.stopScanning()
-                    scanContext!!.sendPluginResult( result )
-                    scanContext = null
-                    context.success()
+                    context.success();
                 }
                 "startAdvertiser" -> {
-                    adContext?.let{ throw Exception( "Advertiser is already started" ) }
-                    adContext = context
                     try { uuid = UUID.fromString( args.getString(0) ) } catch (e: Exception) { }
                     cenAdvertiser!!.startAdvertiser( uuid )
-                    result.setKeepCallback( true )
-                    context.sendPluginResult( result )
+                    context.success();
                 }
                 "stopAdvertiser" -> {
-                    adContext ?: throw Exception( "Advertiser is already stopped" )
+                    try { uuid = UUID.fromString( args.getString(0) ) } catch (e: Exception) { }
                     cenAdvertiser!!.stopAdvertiser()
-                    adContext!!.sendPluginResult( result )
-                    adContext = null
-                    context.success()
+                    context.success();
                 }
                 "updateCEN" -> {
-                    adContext ?: throw Exception( "Advertiser must be started first" )
-                    cenAdvertiser!!.updateCEN()
-                    context.success()
+                    context.success(JSONArray(inMemoryCache));
                 }
                 else -> throw Exception( "Invalid Action" )
             }
@@ -89,23 +76,21 @@ class ContactTracing : CordovaPlugin() {
 
     inner class ScanCENHandler : CENHandler {
         override fun handleCEN(cen: CEN) {
-            scanContext ?: return
             val contactEvent = JSONObject()
-            contactEvent.put( "cen", cen.toUUID().toString() )
-            val result = PluginResult(PluginResult.Status.OK, contactEvent)
-            result.setKeepCallback(true);
-            scanContext!!.sendPluginResult(result)
+            contactEvent.put( "number", cen.toUUID().toString() )
+            contactEvent.put( "ts", System.currentTimeMillis()/1000)
+            contactEvent.put( "type", "scan")
+            inMemoryCache!!.add(contactEvent);
         }
     }
 
     inner class AdCENHandler : CENHandler {
         override fun handleCEN(cen: CEN) {
-            adContext ?: return
             val contactEvent = JSONObject()
-            contactEvent.put( "cen", cen.toUUID().toString() )
-            val result = PluginResult(PluginResult.Status.OK, contactEvent)
-            result.setKeepCallback(true);
-            adContext!!.sendPluginResult(result)
+            contactEvent.put( "number", cen.toUUID().toString() )
+            contactEvent.put( "ts", System.currentTimeMillis()/1000)
+            contactEvent.put("type", "advertise");
+            inMemoryCache!!.add(contactEvent);
         }
     }
 

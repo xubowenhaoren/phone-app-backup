@@ -1,6 +1,14 @@
-<ion-view view-title="{{ 'bluetooth.title' | translate }}" ng-class="ion-view-background" translate-namespace="bluetooth">
+<ion-view ng-class="ion-view-background" translate-namespace="bluetooth">
   <ion-nav-buttons side="right">
     <button class="button button-icon ion-refresh" ng-click="refresh()"></button>
+    <button class="button button-icon ion-play" ng-click="startScan()"></button>
+    Scan
+    <button class="button button-icon ion-stop" ng-click="stopScan()"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button button-icon ion-play" ng-click="startAdvertiser()"></button>
+    Advertise
+    <button class="button button-icon ion-stop" ng-click="stopAdvertiser()"></button>
   </ion-nav-buttons>
   
   <div style="background-color:transparent; border-left-style:solid; border-left-width:.5px; border-left-color:#212121; margin-left:10%; position:absolute; float:left; height:100%"></div>
@@ -9,7 +17,7 @@
     <ion-refresher pulling-text="{{ 'pull-to-refresh' | translate }}" on-refresh="refresh()"></ion-refresher>
     <ion-list>
       <div collection-repeat="cen in data" style="margin-top:16px">
-        <div class="start-time-tag" style="top:20px; {{ cen.ad ? 'background:#ddd' : '' }}">{{ cen.time }}</div>
+        <div class="start-time-tag" style="top:20px; {{ cen.ad ? 'background:#ddd' : '' }}">{{ formatTime(cen.ts) }}</div>
         <div style="padding-left:19%">
           <ion-item id="bluetooth-item" class="list-item" style="background-color: transparent; border:none; height:auto; padding:8px 16px">
           <div id="bluetooth-card" class="list card list-card" style="height:auto; width:100%; margin:0; background:{{ cen.ad ? '#f8f8f8' : '#eeffff' }}">
