@@ -133,7 +133,7 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
 
   ptap.unregisterUserResponse = function() {
     Logger.log( "registerUserResponse received!" );
-    $window.cordova.plugins.notification.local.off('action', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('action', function (notification, state, data) {
       if (!checkCategory(notification)) {
           Logger.log("notification "+notification+" is not an mode choice, returning...");
           return;
@@ -197,13 +197,13 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
         });
       }
     });
-    $window.cordova.plugins.notification.local.off('clear', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('clear', function (notification, state, data) {
         // alert("notification cleared, no report");
     });
-    $window.cordova.plugins.notification.local.off('cancel', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('cancel', function (notification, state, data) {
         // alert("notification cancelled, no report");
     });
-    $window.cordova.plugins.notification.local.off('trigger', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('trigger', function (notification, state, data) {
         // alert("triggered, no action");
         Logger.log("Notification triggered");
         if (!checkCategory(notification)) {
@@ -225,7 +225,7 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
           displayCompletedTrip(notification, state, data);
         }
     });
-    $window.cordova.plugins.notification.local.off('click', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('click', function (notification, state, data) {
       // alert("clicked, no action");
       Logger.log("Notification, click event");
       if (!checkCategory(notification)) {
