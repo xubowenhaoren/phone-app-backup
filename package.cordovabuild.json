@@ -39,7 +39,7 @@
     }
   },
   "dependencies": {
-    "cordova-android": "^6.4.0",
+    "cordova-android": "^8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-app-version": "~0.1.9",
     "cordova-plugin-contacttracing": "file:resources/plugins/cordova-plugin-contacttracing",
