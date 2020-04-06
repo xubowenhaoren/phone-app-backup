@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="cordova-plugin-contacttracing"
+        version="0.0.1">
+
+  <name>ContactTracing</name>
+
+  <engines>
+    <engine name="cordova" version=">=7.1.0"/>
+    <engine name="cordova-android" version=">=7.0.0"/>
+  </engines>
+
+  <description>CovidWatch Contact Tracing Library Plugin</description>
+  <author>Thomas Zachariah</author>
+  <license>Apache 2.0</license>
+  <keywords>libcontacttracing, covidwatch, contact tracing, covid, coronavirus, ble, bluetooth</keywords>
+
+  <repo>https://github.com/tzachari/cordova-plugin-contacttracing.git</repo>
+  <issue>https://github.com/tzachari/cordova-plugin-contacttracing/issues</issue>
+
+  <js-module src="www/contacttracing.js" name="contacttracing">
+    <clobbers target="cordova.plugins.contacttracing" />
+  </js-module>
+
+  <platform name="android"
+            kotlin="1.3.71">
+    <!-- Add Kotlin support -->
+    <hook type="after_plugin_add" src="hooks/support-kotlin.js" />
+    <hook type="after_platform_add" src="hooks/support-kotlin.js" />
+    <framework src="org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71"/>
+    <apply-plugin>kotlin-android-extensions</apply-plugin>
+    <apply-plugin>kotlin-kapt</apply-plugin>
+    <!-- Cleanup Kotlin source on uninstall -->
+    <hook type="before_plugin_rm" src="hooks/on-uninstall.js" />
+    <hook type="before_plugin_uninstall" src="hooks/on-uninstall.js" />
+
+    <config-file target="config.xml" parent="/*">
+      <feature name="ContactTracing">
+        <param name="android-package" value="org.covidwatch.libcontacttracing.ContactTracing" onload="true"/>
+      </feature>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.BLUETOOTH"/>
+      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    </config-file>
+
+    <source-file src="src/android/UUIDUtil.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/CENScanner.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/CENHandler.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/CENGenerator.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/CENAdvertiser.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/CEN.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+    <source-file src="src/android/ContactTracing.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+
+  </platform>
+
+</plugin>

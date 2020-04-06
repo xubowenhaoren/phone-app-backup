@@ -154,6 +154,11 @@
         "list-pick-a-date": "Pick a date"
     },
 
+    "bluetooth": {
+        "bluetooth": "Bluetooth",
+        "title": "BLE Contact Events"
+    },
+
     "user-gender": "Gender",
     "gender-male": "Male",
     "gender-female": "Female",

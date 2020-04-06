@@ -1,0 +1,50 @@
+{
+  "name": "cordova-plugin-contacttracing",
+  "version": "0.0.1",
+  "description": "CovidWatch Contact Tracing Library Plugin",
+  "cordova": {
+    "id": "cordova-plugin-contacttracing",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-mission/e-mission-data-collection.git"
+  },
+  "keywords": [
+    "libcontacttracing",
+    "covidwatch",
+    "contact tracing",
+    "covid",
+    "coronavirus",
+    "ble",
+    "bluetooth"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=7.1.0"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=7.0.0"
+    },
+    {
+      "name": "android-sdk",
+      "version": ">=26"
+    },
+    {
+      "name": "apple-ios",
+      "version": ">=10.0.0"
+    }
+  ],
+  "author": "Thomas Zachariah",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/covid19database/phone-app/issues"
+  },
+  "homepage": "https://github.com/covid19database/phone-app"
+}
+
