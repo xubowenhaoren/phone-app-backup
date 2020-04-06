@@ -41,7 +41,7 @@ function removeKotlinSourceFiles(){
 }
 module.exports = function(ctx) {
     try{
-        deferral = require('q').defer();
+        deferral = ctx.requireCordovaModule('q').defer();
         removeKotlinSourceFiles();
         deferral.resolve();
     }catch(e){

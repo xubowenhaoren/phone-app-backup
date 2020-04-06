@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-contacttracing",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "CovidWatch Contact Tracing Library Plugin",
   "cordova": {
     "id": "cordova-plugin-contacttracing",
@@ -25,11 +25,11 @@
   "engines": [
     {
       "name": "cordova",
-      "version": ">=3.6.0"
+      "version": ">=7.1.0"
     },
     {
       "name": "cordova-android",
-      "version": ">=6.0.0"
+      "version": ">=7.0.0"
     },
     {
       "name": "android-sdk",
