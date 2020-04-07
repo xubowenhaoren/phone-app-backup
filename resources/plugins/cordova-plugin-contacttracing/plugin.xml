@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="cordova-plugin-contacttracing"
-        version="0.0.1">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-plugin-contacttracing" version="0.0.1">
 
   <name>ContactTracing</name>
 
   <engines>
     <engine name="cordova" version=">=7.1.0"/>
+    <engine name="cordova-ios" version=">=5.0.0"/>
     <engine name="cordova-android" version=">=7.0.0"/>
   </engines>
 
@@ -20,16 +19,20 @@
 
   <js-module src="www/contacttracing.js" name="contacttracing">
     <clobbers target="cordova.plugins.contacttracing" />
+    <clobbers target="contacttracing" />
   </js-module>
 
-  <platform name="android"
-            kotlin="1.3.71">
+  <platform name="android" kotlin="1.3.71">
+
     <!-- Add Kotlin support -->
     <hook type="after_plugin_add" src="hooks/support-kotlin.js" />
     <hook type="after_platform_add" src="hooks/support-kotlin.js" />
+
+    <!-- Framework and plugins for Kotlin -->
     <framework src="org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71"/>
     <apply-plugin>kotlin-android-extensions</apply-plugin>
     <apply-plugin>kotlin-kapt</apply-plugin>
+
     <!-- Cleanup Kotlin source on uninstall -->
     <hook type="before_plugin_rm" src="hooks/on-uninstall.js" />
     <hook type="before_plugin_uninstall" src="hooks/on-uninstall.js" />
@@ -53,6 +56,43 @@
     <source-file src="src/android/CENAdvertiser.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
     <source-file src="src/android/CEN.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
     <source-file src="src/android/ContactTracing.kt" target-dir="app/src/main/java/org/covidwatch/libcontacttracing"/>
+
+  </platform>
+
+  <platform name="ios">
+
+    <config-file target="config.xml" parent="/widget">
+      <feature name="ContactTracing">
+        <param name="ios-package" value="ContactTracing" onload="true"/>
+      </feature>
+      <preference name="SwiftVersion" value="5" />
+    </config-file>
+
+    <framework src="CoreBluetooth.framework" />
+
+    <preference name="BLUETOOTH_USAGE_DESCRIPTION" default="Keeps track of anonymized contact events to assess risk. Performs best when location tracking is set to 'Always Allow'." />
+    <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
+      <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+    </config-file>
+    <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+      <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+    </config-file>
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>bluetooth-central</string>
+        <string>bluetooth-peripheral</string>
+      </array>
+    </config-file>
+
+    <source-file src="src/ios/ContactTracing.swift" target-dir="ContactTracing"/>
+    <source-file src="src/ios/ContactTracingBluetooth/BluetoothController.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/BluetoothController+ContactEvent.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/BluetoothService.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/BluetoothService+CoreBluetooth.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/CBPeripheral+Additions.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/ContactTracingBluetooth.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/ContactTracingBluetoothService.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
+    <source-file src="src/ios/ContactTracingBluetooth/DistanceEstimation.swift" target-dir="ContactTracing/ContactTracingBluetooth"/>
 
   </platform>
 
