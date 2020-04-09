@@ -37,7 +37,7 @@ class ContactTracing : CDVPlugin {
                 let data = withUnsafeBytes(of: UUID().uuid, { Data($0) })
                 self.inMemoryCache?.append( [
                     "number" : data.base64EncodedString(),
-                    "ts" : Date().timeIntervalSince1970,
+                    "ts" : Date().timeIntervalSince1970 * 1000, // * 1000 to convert sec to ms
                     "type" : "advertise"
                 ] )
                 return data
@@ -45,7 +45,7 @@ class ContactTracing : CDVPlugin {
                 NSLog("Bluetooth sharing found a contact event number from a nearby device" )
                 self.inMemoryCache?.append( [
                     "number" : data.base64EncodedString(),
-                    "ts" : Date().timeIntervalSince1970,
+                    "ts" : Date().timeIntervalSince1970 * 1000, // * 1000 to convert sec to ms
                     "type" : "scan"
                 ] )
             }, errorHandler: { ( error ) in
