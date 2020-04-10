@@ -1,6 +1,6 @@
 {
   "name": "edu.berkeley.eecs.covid19",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "displayName": "cv-19-track",
   "scripts": {
     "setup-serve": "./bin/download_settings_controls.js",
@@ -60,7 +60,7 @@
     "em-cordova-jwt-auth": "git+https://github.com/e-mission/cordova-jwt-auth.git#v1.6.2-alpha1",
     "em-cordova-server-communication": "git+https://github.com/e-mission/cordova-server-communication.git#v1.2.2",
     "em-cordova-server-sync": "git+https://github.com/e-mission/cordova-server-sync.git#v1.2.3",
-    "em-cordova-transition-notify": "git+https://github.com/e-mission/e-mission-transition-notify.git#v1.2.4",
+    "em-cordova-transition-notify": "git+https://github.com/e-mission/e-mission-transition-notify.git#v1.2.5",
     "em-cordova-unified-logger": "git+https://github.com/e-mission/cordova-unified-logger.git#v1.3.2",
     "em-cordova-usercache": "git+https://github.com/e-mission/cordova-usercache.git#v1.1.2",
     "fs-extra": "^5.0.0",
