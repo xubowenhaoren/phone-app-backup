@@ -3,7 +3,7 @@
 
 node_modules/
 platforms/
-plugins/
+/plugins/
 www/lib/
 package-hooks/
 .DS_Store
@@ -11,6 +11,7 @@ app-settings.json
 .idea/
 .io-config.json
 *.apk
+*.app.zip
 *.ipa
 www/js/control/collect-settings.js
 www/js/control/sync-settings.js

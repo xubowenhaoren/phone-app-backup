@@ -59,11 +59,11 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
     return reportNotifyConfig;
   }
 
-  ptap.registerTripEnd = function() {
-    Logger.log( "registertripEnd received!" );
+  ptap.unregisterTripEnd = function() {
+    Logger.log( "unregistertripEnd received!" );
     // iOS
     var notifyPlugin = $window.cordova.plugins.BEMTransitionNotification;
-    notifyPlugin.addEventListener(notifyPlugin.TRIP_END, getTripEndReportNotification())
+    notifyPlugin.removeEventListener(notifyPlugin.TRIP_END, getTripEndReportNotification())
         .then(function(result) {
             // $window.broadcaster.addEventListener("TRANSITION_NAME",  function(result) {
             Logger.log("Finished registering "+notifyPlugin.TRIP_END+" with result "+JSON.stringify(result));
@@ -111,7 +111,7 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
 
   var cleanDataIfNecessary = function(notification, state, data) {
     if ($ionicPlatform.is('ios') && angular.isDefined(notification.data)) {
-      Logger.log("About to parse "+notification.data);
+      Logger.log("About to parse "+JSON.stringify(notification.data));
       notification.data = JSON.parse(notification.data);
     }
   };
@@ -131,9 +131,9 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
     }
   }
 
-  ptap.registerUserResponse = function() {
+  ptap.unregisterUserResponse = function() {
     Logger.log( "registerUserResponse received!" );
-    $window.cordova.plugins.notification.local.on('action', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('action', function (notification, state, data) {
       if (!checkCategory(notification)) {
           Logger.log("notification "+notification+" is not an mode choice, returning...");
           return;
@@ -197,13 +197,13 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
         });
       }
     });
-    $window.cordova.plugins.notification.local.on('clear', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('clear', function (notification, state, data) {
         // alert("notification cleared, no report");
     });
-    $window.cordova.plugins.notification.local.on('cancel', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('cancel', function (notification, state, data) {
         // alert("notification cancelled, no report");
     });
-    $window.cordova.plugins.notification.local.on('trigger', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('trigger', function (notification, state, data) {
         // alert("triggered, no action");
         Logger.log("Notification triggered");
         if (!checkCategory(notification)) {
@@ -225,7 +225,7 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
           displayCompletedTrip(notification, state, data);
         }
     });
-    $window.cordova.plugins.notification.local.on('click', function (notification, state, data) {
+    $window.cordova.plugins.notification.local.un('click', function (notification, state, data) {
       // alert("clicked, no action");
       Logger.log("Notification, click event");
       if (!checkCategory(notification)) {
@@ -238,8 +238,8 @@ angular.module('emission.tripconfirm.posttrip.prompt', ['emission.plugin.logger'
   };
 
   $ionicPlatform.ready().then(function() {
-    ptap.registerTripEnd();
-    ptap.registerUserResponse();
+    ptap.unregisterTripEnd();
+    ptap.unregisterUserResponse();
   });
 
   return ptap;

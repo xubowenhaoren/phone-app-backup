@@ -7,7 +7,6 @@ angular.module('emission.main.control',['emission.services',
                                         'ionic-datepicker',
                                         'ionic-datepicker.provider',
                                         'emission.splash.startprefs',
-                                        'emission.splash.updatecheck',
                                         'emission.main.metrics.factory',
                                         'emission.stats.clientstats',
                                         'emission.plugin.kvstore',
@@ -21,7 +20,6 @@ angular.module('emission.main.control',['emission.services',
                ControlCollectionHelper, ControlSyncHelper,
                ControlTransitionNotifyHelper,
                CarbonDatasetHelper,
-               UpdateCheck,
                CalorieCal, ClientStats, CommHelper, Logger,
                $translate) {
 
@@ -246,14 +244,6 @@ angular.module('emission.main.control',['emission.services',
         $scope.settings.tnotify = {};
         $scope.settings.auth = {};
         $scope.settings.connect = {};
-        $scope.settings.channel = function(newName) {
-          return arguments.length ? (UpdateCheck.setChannel(newName)) : $scope.settings.storedChannel;
-        };
-        UpdateCheck.getChannel().then(function(retVal) {
-            $scope.$apply(function() {
-                $scope.settings.storedChannel = retVal;
-            });
-        });
         $scope.getConnectURL();
         $scope.getCollectionSettings();
         $scope.getSyncSettings();
@@ -474,10 +464,6 @@ angular.module('emission.main.control',['emission.services',
     $scope.userDataExpanded = function() {
         return $scope.dataExpanded && $scope.userDataSaved();
     }
-    $scope.checkUpdates = function() {
-      UpdateCheck.checkForUpdates();
-    }
-
     var handleNoConsent = function(resultDoc) {
         $ionicPopup.confirm({template: $translate.instant('general-settings.consent-not-found')})
         .then(function(res){
