@@ -55,6 +55,12 @@ Troubleshooting
 - Another workaround is to delete the local environment and recreate it
     - javascript errors: `rm -rf node_modules && npm install`
     - native code compile errors: `rm -rf plugins && rm -rf platforms && npx cordova prepare`
+- If you are preparing the setup from your own fork, make sure to remove the `upstream`. 
+    - `git remote rm upstream`
+- You may notice that `set -e` was included in the setup scripts. It will stop the setup process when the script runs into an issue. Note that not all issues are real "problems": currently, it will also stop if you already installed Gradle 4.1 or try to re-run the script because of a previous error. 
+    - You could try removing the `set -e` temporarily. 
+    - You could try running the setup script step by step to see what fails. 
+    - See [here](https://github.com/e-mission/e-mission-docs/issues/501#issuecomment-616391522) for an example. 
 
 Beta-testing debugging
 ---
