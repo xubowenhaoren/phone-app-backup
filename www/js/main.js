@@ -9,7 +9,8 @@ angular.module('emission.main', ['emission.main.recent',
                                  'emission.main.metrics',
                                  'emission.tripconfirm.posttrip.map',
                                  'emission.services',
-                                 'emission.services.email'])
+                                 'emission.services.email', 
+                                 'emission.main.aware'])
 
 .config(function($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
   $stateProvider
@@ -28,6 +29,17 @@ angular.module('emission.main', ['emission.main.recent',
       'main-common': {
         templateUrl: 'templates/main-common.html',
         controller: 'CommonCtrl'
+      }
+    },
+  })
+
+  // aware page
+  .state('root.main.aware', {
+    url: '/aware',
+    views: {
+      'main-aware': {
+        templateUrl: 'templates/aware/aware.html',
+        controller: 'AwareCtrl'
       }
     },
   })

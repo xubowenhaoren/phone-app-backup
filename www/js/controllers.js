@@ -46,7 +46,8 @@ angular.module('emission.controllers', ['emission.splash.startprefs',
       var personalTabs = ['root.main.common.map',
                           'root.main.control',
                           'root.main.metrics',
-                          'root.main.diary']
+                          'root.main.diary', 
+                          'root.main.aware']
       if (isInList(toState.name, personalTabs)) {
         // toState is in the personalTabs list
         StartPrefs.getPendingOnboardingState().then(function(result) {
