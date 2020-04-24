@@ -34,36 +34,36 @@ angular.module('emission.main.aware', [
     //     ],
     //   };
 
-      $scope.startWalkthrough = function () {
-        nzTour.start(tour).then(function (result) {
-          Logger.log('list walkthrough start completed, no error');
-        }).catch(function (err) {
-          Logger.log('list walkthrough start errored' + err);
-        });
-      };
+      // $scope.startWalkthrough = function () {
+      //   nzTour.start(tour).then(function (result) {
+      //     Logger.log('list walkthrough start completed, no error');
+      //   }).catch(function (err) {
+      //     Logger.log('list walkthrough start errored' + err);
+      //   });
+      // };
 
       /*
         * Checks if it is the first time the user has loaded the diary tab. If it is then
         * show a walkthrough and store the info that the user has seen the tutorial.
         */
-      var checkTutorialDone = function () {
-        var ACCESSMAP_DONE_KEY = 'accessmap_tutorial_done';
-        var accessmapTutorialDone = storage.get(ACCESSMAP_DONE_KEY);
-        if (!accessmapTutorialDone) {
-          $scope.startWalkthrough();
-          storage.set(ACCESSMAP_DONE_KEY, true);
-        }
-      };
+      // var checkTutorialDone = function () {
+      //   var ACCESSMAP_DONE_KEY = 'accessmap_tutorial_done';
+      //   var accessmapTutorialDone = storage.get(ACCESSMAP_DONE_KEY);
+      //   if (!accessmapTutorialDone) {
+      //     $scope.startWalkthrough();
+      //     storage.set(ACCESSMAP_DONE_KEY, true);
+      //   }
+      // };
 
-      var sliceUUID = function (uuidWithNoDash) {
-        var uuidParts = [];
-        uuidParts.push(uuidWithNoDash.slice(0,8));
-        uuidParts.push(uuidWithNoDash.slice(8,12));
-        uuidParts.push(uuidWithNoDash.slice(12,16));
-        uuidParts.push(uuidWithNoDash.slice(16,20));
-        uuidParts.push(uuidWithNoDash.slice(20,32));
-        return uuidParts.join('-');
-      };
+      // var sliceUUID = function (uuidWithNoDash) {
+      //   var uuidParts = [];
+      //   uuidParts.push(uuidWithNoDash.slice(0,8));
+      //   uuidParts.push(uuidWithNoDash.slice(8,12));
+      //   uuidParts.push(uuidWithNoDash.slice(12,16));
+      //   uuidParts.push(uuidWithNoDash.slice(16,20));
+      //   uuidParts.push(uuidWithNoDash.slice(20,32));
+      //   return uuidParts.join('-');
+      // };
 
       $scope.openBrowser = function () {
         // Load AccessMap with uuid
@@ -82,6 +82,6 @@ angular.module('emission.main.aware', [
           return;
         }
 
-        checkTutorialDone();
+        // checkTutorialDone();
       });
     });
