@@ -67,12 +67,13 @@ angular.module('emission.main.aware', [
 
       $scope.openBrowser = function () {
         // Load AccessMap with uuid
-        var url = $sce.trustAsResourceUrl('https://www.accessmap.io/signin');
-        $cordovaInAppBrowser.open(url, '_system', {
-          location: 'no',
-          clearcache: 'no',
-          toolbar: 'yes'
-        });
+        // var url = $sce.trustAsResourceUrl('https://www.accessmap.io/signin');
+        // $cordovaInAppBrowser.open(url, '_system', {
+        //   location: 'no',
+        //   clearcache: 'no',
+        //   toolbar: 'yes'
+        // });
+        window.sum(2, 3, function(result) { alert("Result:" + result); }, function(err) { alert(err); });
       };
 
       $scope.$on('$ionicView.enter', function(ev) {
