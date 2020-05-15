@@ -86,7 +86,6 @@ module.exports = function (context) {
         var etree = et.parse(data);
         var applicationName = etree._root.attrib.id;
         console.log(LOG_NAME + "Your application is " + applicationName);
-
         var platformRoot = path.join(context.opts.projectRoot, 'platforms/android/')
 
         console.log(LOG_NAME + "Updating AndroidManifest.xml...");

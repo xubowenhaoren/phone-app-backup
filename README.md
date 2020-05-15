@@ -1,84 +1,10 @@
-e-mission phone app
+covid19 phone app
 --------------------
 
-This is the phone component of the e-mission system.
+![osx-build-ios](https://github.com/covid19database/phone-app/workflows/osx-build-ios/badge.svg)
+![osx-ubuntu-build-android](https://github.com/covid19database/phone-app/workflows/osx-ubuntu-build-android/badge.svg)
 
-Additional Documentation
----
-Additional documentation has been moved to its own repository [e-mission-docs](https://github.com/e-mission/e-mission-docs). Specific e-mission-phone wikis can be found here:
-https://github.com/e-mission/e-mission-docs/tree/master/docs/e-mission-phone
-
-**Issues:** Since this repository is part of a larger project, all issues are tracked [in the central docs repository](https://github.com/e-mission/e-mission-docs/issues). If you have a question, [as suggested by the open source guide](https://opensource.guide/how-to-contribute/#communicating-effectively), please file an issue instead of sending an email. Since issues are public, other contributors can try to answer the question and benefit from the answer.
-
-Updating the UI only
----
-[![osx-serve-install](https://github.com/e-mission/e-mission-phone/workflows/osx-serve-install/badge.svg)](https://github.com/e-mission/e-mission-phone/actions?query=workflow%3Aosx-serve-install)
-
-If you want to make only UI changes, (as opposed to modifying the existing plugins, adding new plugins, etc), you can use the **new and improved** (as of June 2018) e-mission dev app. 
-
-### Installing
-
-Run the setup script
-
-```
-$ source setup/setup_serve.sh
-```
-
-**(optional)** Configure by changing the files in `www/json`.
-Defaults are in `www/json/*.sample`
-
-```
-$ ls www/json/*.sample
-$ cp www/json/startupConfig.json.sample www/json/startupConfig.json
-$ cp ..... www/json/connectionConfig.json
-```
-  
-### Running
-
-1. Start the phonegap deployment server and note the URL(s) that the server is listening to.
-
-    ```
-    $ npm run serve
-    ....
-    [phonegap] listening on 10.0.0.14:3000
-    [phonegap] listening on 192.168.162.1:3000
-    [phonegap]
-    [phonegap] ctrl-c to stop the server
-    [phonegap]
-    ....
-    ```
-  
-1. Change the devapp connection URL to one of these (e.g. 192.168.162.1:3000) and press "Connect"
-1. The app will now display the version of e-mission app that is in your local directory
-  1. The console logs will be displayed back in the server window (prefaced by `[console]`)
-  1. Breakpoints can be added by connecting through the browser
-    - Safari ([enable develop menu](https://support.apple.com/guide/safari/use-the-safari-develop-menu-sfri20948/mac)): Develop -> Simulator -> index.html
-    - Chrome: chrome://inspect -> Remote target (emulator)
-    
-**Ta-da!** :gift: If you change any of the files in the `www` directory, the app will automatically be re-loaded without manually restarting either the server or the app :tada:
-
-**Note1**: You may need to scroll up, past all the warnings about `Content Security Policy has been added` to find the port that the server is listening to.
-
-
-End to end testing
----
-A lot of the visualizations that we display in the phone client come from the server. In order to do end to end testing, we need to run a local server and connect to it. Instructions for:
-
-1. installing a local server,
-2. running it, 
-3. loading it with test data, and
-4. running analysis on it
-
-are available in the [e-mission-server README](https://github.com/e-mission/e-mission-server/blob/master/README.md).
-
-In order to make end to end testing easy, if the local server is started on a HTTP (versus HTTPS port), it is in development mode.  By default, the phone app connects to the local server (localhost on iOS, [10.0.2.2 on android](https://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips)) with the `prompted-auth` authentication method. To connect to a different server, or to use a different authentication method, you need to create a `www/json/connectionConfig.json` file. More details on configuring authentication [can be found in the docs](https://github.com/e-mission/e-mission-docs/docs/e-mission-common/configuring_authentication.md).
-
-One advantage of using `skip` authentication in development mode is that any user email can be entered without a password. Developers can use one of the emails that they loaded test data for in step (3) above. So if the test data loaded was with `-u shankari@eecs.berkeley.edu`, then the login email for the phone app would also be `shankari@eecs.berkeley.edu`.
-
-Updating the e-mission-\* plugins or adding new plugins
----
-[![osx-build-ios](https://github.com/e-mission/e-mission-phone/workflows/osx-build-ios/badge.svg)](https://github.com/e-mission/e-mission-phone/actions?query=workflow%3Aosx-ubuntu-build-android)
-[![osx-ubuntu-build-android](https://github.com/e-mission/e-mission-phone/workflows/osx-ubuntu-build-android/badge.svg)](https://github.com/e-mission/e-mission-phone/actions?query=workflow%3Aosx-build-ios)
+This is the reference app for the [covid19 shared datastore](https://github.com/covid19database/covid19db-api/).
 
 Pre-requisites
 ---
@@ -110,15 +36,6 @@ AND/OR
 $ source setup/setup_ios_native.sh
 ```
 
-**(optional)** Configure by changing the files in `www/json`.
-Defaults are in `www/json/*.sample`
-
-```
-$ ls www/json/*.sample
-$ cp www/json/startupConfig.json.sample www/json/startupConfig.json
-$ cp ..... www/json/connectionConfig.json
-```
-
 Run in the emulator
 
 ```
@@ -138,6 +55,12 @@ Troubleshooting
 - Another workaround is to delete the local environment and recreate it
     - javascript errors: `rm -rf node_modules && npm install`
     - native code compile errors: `rm -rf plugins && rm -rf platforms && npx cordova prepare`
+- If you are preparing the setup from your own fork, make sure to remove the `upstream`. 
+    - `git remote rm upstream`
+- You may notice that `set -e` was included in the setup scripts. It will stop the setup process when the script runs into an issue. Note that not all issues are real "problems": currently, it will also stop if you already installed Gradle 4.1 or try to re-run the script because of a previous error. 
+    - You could try removing the `set -e` temporarily. 
+    - You could try running the setup script step by step to see what fails. 
+    - See [here](https://github.com/e-mission/e-mission-docs/issues/501#issuecomment-616391522) for an example. 
 
 Beta-testing debugging
 ---
@@ -153,35 +76,4 @@ $ pwd
 .../e-mission-phone
 $ python bin/csv_export_add_date.py /tmp/loggerDB.<issue>
 $ less /tmp/loggerDB.<issue>.withdate.log
-```
-
-Contributing
----
-
-Add the main repo as upstream
-
-    $ git remote add upstream https://github.com/covid19database/phone-app.git
-
-Create a new branch (IMPORTANT). Please do not submit pull requests from master
-
-    $ git checkout -b mybranch
-
-Make changes to the branch and commit them
-
-    $ git commit
-
-Push the changes to your local fork
-
-    $ git push origin mybranch
-
-Generate a pull request from the UI
-
-Address my review comments
-
-Once I merge the pull request, pull the changes to your fork and delete the branch
-```
-$ git checkout master
-$ git pull upstream master
-$ git push origin master
-$ git branch -d mybranch
 ```

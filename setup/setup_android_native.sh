@@ -1,5 +1,5 @@
 echo "Ensure we exit on error"
-set -e
+# set -e
 
 # we can build android on both ubuntu and OSX
 # should try both since there may be subtle differences

@@ -1,9 +1,8 @@
 angular.module('emission.splash.startprefs', ['emission.plugin.logger',
-                                              'emission.splash.referral',
                                               'emission.plugin.kvstore'])
 
 .factory('StartPrefs', function($window, $state, $interval, $rootScope, $ionicPlatform,
-      $ionicPopup, KVStore, storage, $http, Logger, ReferralHandler) {
+      $ionicPopup, KVStore, storage, $http, Logger) {
     var logger = Logger;
     var nTimesCalled = 0;
     var startprefs = {};
@@ -164,10 +163,7 @@ angular.module('emission.splash.startprefs', ['emission.plugin.logger',
     startprefs.getNextState = function() {
       return startprefs.getPendingOnboardingState().then(function(result){
         if (result == null) {
-          var temp = ReferralHandler.getReferralNavigation();
-          if (temp == 'goals') {
-            return {state: 'root.main.goals', params: {}};
-          } else if ($rootScope.tripConfirmParams) {
+          if ($rootScope.tripConfirmParams) {
             logger.log("Showing tripconfirm from startprefs");
             var startEndParams = $rootScope.tripConfirmParams;
             $rootScope.tripConfirmParams = angular.undefined;
@@ -188,16 +184,8 @@ angular.module('emission.splash.startprefs', ['emission.plugin.logger',
     var changeState = function(destState) {
         logger.log('changing state to '+destState);
         console.log("loading "+destState);
-        // TODO: Fix this the right way when we fix the FSM
-        // https://github.com/e-mission/e-mission-phone/issues/146#issuecomment-251061736
-        var reload = false;
-        if (($state.$current == destState.state) && ($state.$current.name == 'root.main.goals')) {
-          reload = true;
-        }
         $state.go(destState.state, destState.params).then(function() {
-            if (reload) {
-              $rootScope.$broadcast("RELOAD_GOAL_PAGE_FOR_REFERRAL")
-            }
+            logger.log("state change to "+destState+" was successful");
         });
     };
 

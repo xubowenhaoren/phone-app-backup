@@ -1008,12 +1008,18 @@ svg {
 html, body, #chart1, svg {
     padding: 0px;
     margin: 0 10px 0 0;
-
 }
 html, body, #chart2, svg {
     padding: 0px;
     margin: 0 10px 0 0;
 }
+body {
+    padding-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+    padding-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+    padding-bottom: constant(safe-area-inset-bottom); /* Status bar height on iOS 11.0 */
+    padding-bottom: env(safe-area-inset-bottom); /* Status bar height on iOS 11+ */
+}
+
 .nvd3, nv-noData {
   font-weight: 300 !important;
 }

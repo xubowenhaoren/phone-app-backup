@@ -987,28 +987,14 @@ angular.module('emission.main.diary.services', ['emission.plugin.logger',
 
     // Functions
     timeline.updateForDay = function(day) { // currDay is a moment
-      // First, we try the server
-      var tripsFromServerPromise = timeline.updateFromServer(day);
-      var isProcessingCompletePromise = timeline.isProcessingComplete(day);
-
-      // Deal with all the trip retrieval
-      Promise.all([tripsFromServerPromise, isProcessingCompletePromise])
-        .then(function([processedTripList, completeStatus]) {
-        console.log("Promise.all() finished successfully with length "
-          +processedTripList.length+" completeStatus = "+completeStatus);
-        var tripList = processedTripList;
-        if (!completeStatus) {
-          return timeline.readUnprocessedTrips(day, processedTripList)
-            .then(function(unprocessedTripList) {
-              Logger.log("tripList.length = "+tripList.length
-                         +"unprocessedTripList.length = "+unprocessedTripList.length);
-              Array.prototype.push.apply(tripList, unprocessedTripList);
-              console.log("After merge, returning trip list of size "+tripList.length);
-              return tripList;
-            });
-        } else {
-            return tripList;
-        }
+      var tripList = [];
+      return timeline.readUnprocessedTrips(day, tripList)
+        .then(function(unprocessedTripList) {
+          Logger.log("tripList.length = "+tripList.length
+                     +"unprocessedTripList.length = "+unprocessedTripList.length);
+          Array.prototype.push.apply(tripList, unprocessedTripList);
+          console.log("After merge, returning trip list of size "+tripList.length);
+          return tripList;
       }).then(function(combinedTripList) {
           var tq = { key: 'write_ts', startTs: 0, endTs: moment().endOf('day').unix(), };
           return Promise.all([
