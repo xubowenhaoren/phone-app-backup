@@ -73,7 +73,12 @@ angular.module('emission.main.aware', [
         //   clearcache: 'no',
         //   toolbar: 'yes'
         // });
-        window.sum(2, 3, function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+        window.checkBattery(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+      };
+
+      $scope.joinStudy = function () {
+
+        window.joinStudy(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
       };
 
       $scope.$on('$ionicView.enter', function(ev) {
