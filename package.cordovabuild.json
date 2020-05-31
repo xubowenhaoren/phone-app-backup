@@ -70,6 +70,6 @@
     "em-cordova-usercache": "git+https://github.com/e-mission/cordova-usercache.git#v1.1.2",
     "fs-extra": "^5.0.0",
     "ionic-plugin-keyboard": "~2.2.1",
-    "klaw-sync": "^3.0.2",
+    "klaw-sync": "^3.0.2"
   }
 }
