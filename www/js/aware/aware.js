@@ -65,7 +65,7 @@ angular.module('emission.main.aware', [
       //   return uuidParts.join('-');
       // };
 
-      $scope.openBrowser = function () {
+      $scope.openAware = function () {
         // Load AccessMap with uuid
         // var url = $sce.trustAsResourceUrl('https://www.accessmap.io/signin');
         // $cordovaInAppBrowser.open(url, '_system', {
