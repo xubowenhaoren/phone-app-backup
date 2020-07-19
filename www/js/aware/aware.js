@@ -86,6 +86,11 @@ angular.module('emission.main.aware', [
         window.manualSync(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
       };
 
+      $scope.displayDeviceId = function () {
+
+        window.displayDeviceId(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+      };
+
       $scope.$on('$ionicView.enter', function(ev) {
         // Workaround from
         // https://github.com/driftyco/ionic/issues/3433#issuecomment-195775629
