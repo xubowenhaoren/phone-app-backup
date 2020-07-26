@@ -15,11 +15,17 @@
               allowfullscreen='true' webkitallowfullscreen='true'
               mozallowfullscreen='true'></iframe-->
       <div style="height: 20px;"></div>
+      <div>
+        <label>Name:</label>
+        <input type="text" ng-model="yourName" placeholder="Enter your PID">
+        <hr>
+        <!-- <h1>Hello {{yourName}}!</h1> -->
+      </div>
       <button
         id="check-battery-button"
         style="display: block;margin-left: auto;margin-right: auto;width: 80%;color: #fff;font-weight: 600;border: 0px;background-color: #01D0A7;"
         class="button"
-        ng-click="openAware()">
+        ng-click="checkBattery()">
         Check Battery Optimization
       </button>
       <button
