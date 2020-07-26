@@ -73,22 +73,27 @@ angular.module('emission.main.aware', [
         //   clearcache: 'no',
         //   toolbar: 'yes'
         // });
-        window.checkBattery(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+        window.checkBattery(function(result) { alert(result); }, function(err) { alert(err); });
       };
 
-      $scope.joinStudy = function () {
+      $scope.joinStudy = function (m_name) {
 
-        window.joinStudy(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+        window.joinStudy(m_name, function(result) { alert(result); }, function(err) { alert(err); });
       };
 
       $scope.manualSync = function () {
 
-        window.manualSync(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+        window.manualSync(function(result) { alert(result); }, function(err) { alert(err); });
       };
 
       $scope.displayDeviceId = function () {
 
-        window.displayDeviceId(function(result) { alert("Result:" + result); }, function(err) { alert(err); });
+        window.displayDeviceId(function(result) { alert(result); }, function(err) { alert(err); });
+      };
+
+      $scope.displayPid = function () {
+
+        window.displayPid(function(result) { alert(result); }, function(err) { alert(err); });
       };
 
       $scope.$on('$ionicView.enter', function(ev) {
