@@ -65,6 +65,8 @@ angular.module('emission.main.aware', [
       //   return uuidParts.join('-');
       // };
 
+      $scope.pidPlaceholder = "pidPlaceholder";
+
       $scope.checkBattery = function () {
         // Load AccessMap with uuid
         // var url = $sce.trustAsResourceUrl('https://www.accessmap.io/signin');
@@ -91,17 +93,13 @@ angular.module('emission.main.aware', [
         window.displayDeviceId(function(result) { alert(result); }, function(err) { alert(err); });
       };
 
-      $scope.displayPid = function () {
-
-        window.displayPid(function(result) { alert(result); }, function(err) { alert(err); });
-      };
-
       $scope.$on('$ionicView.enter', function(ev) {
         // Workaround from
         // https://github.com/driftyco/ionic/issues/3433#issuecomment-195775629
-        if(ev.targetScope !== $scope) {
-          return;
-        }
+        // if(ev.targetScope !== $scope) {
+        //   return;
+        // }
+        window.displayPid(function(result) {$scope.pidPlaceholder = result;}, function(err) { alert(err); });
 
         // checkTutorialDone();
       });

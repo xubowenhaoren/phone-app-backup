@@ -17,7 +17,7 @@
       <div style="height: 20px;"></div>
       <div>
         <label>PID:</label>
-        <input id="input_pid" type="text" ng-model="yourName" placeholder="Enter your PID">
+        <input id="input_pid" type="text" ng-model="yourName" placeholder="{{pidPlaceholder}}">
         <button 
           id="join"
           ng-click="joinStudy(yourName)"
@@ -35,13 +35,6 @@
         ng-click="checkBattery()">
         Check Battery Optimization
       </button>
-      <!-- <button
-        id="join-study-button"
-        style="display: block;margin-left: auto;margin-right: auto;width: 80%;color: #fff;font-weight: 600;border: 0px;background-color: #01D0A7;"
-        class="button"
-        ng-click="joinStudy()">
-        Join Study
-      </button> -->
 
       <button
         id="manual-sync-button"
@@ -57,14 +50,6 @@
         class="button"
         ng-click="displayDeviceId()">
         Display DeviceId
-      </button>
-
-      <button
-        id="display-pid-button"
-        style="display: block;margin-left: auto;margin-right: auto;width: 80%;color: #fff;font-weight: 600;border: 0px;background-color: #01D0A7;"
-        class="button"
-        ng-click="displayPid()">
-        Display PID
       </button>
     </ion-content>
   </ion-view>
